@@ -3,7 +3,7 @@
     "type": "project",
     "description": "Dinnovos CMS in Laravel Framework.",
     "keywords": [
-        "dinnovos"
+        "dinnovos",
         "framework",
         "laravel"
     ],
