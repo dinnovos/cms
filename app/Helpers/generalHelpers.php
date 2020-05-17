@@ -13,7 +13,9 @@ function setting($key, $default = -1){
     try {
         $hasTable = Schema::hasTable('settings');
     } catch (Exception $e) {
-        return null;
+        if($default !== -1){
+            return $default;
+        }
     }
 
     if ($hasTable) 
@@ -31,10 +33,11 @@ function setting($key, $default = -1){
         if($setting && isset($setting->$key) && $setting->$key){
             return $setting->$key;
         }
+    }
 
-        if($default !== -1){
-            return $default;
-        }
+    
+    if($default !== -1){
+        return $default;
     }
 
     return null;
