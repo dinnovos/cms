@@ -2,7 +2,7 @@
 
 /*Ruta configurada para el login administrativo */
 $loginRoute = setting('route_login_panel', '/panel');
-        
+
 /*Login Administrativo GET */
 Route::get("$loginRoute", 'AdminLoginController@show')->name('admin.login.show');
 
