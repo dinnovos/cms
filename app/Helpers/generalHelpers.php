@@ -8,7 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 function setting($key, $default = -1){
 
-    if (Schema::hasTable('settings')) 
+    $hasTable = false;
+
+    try {
+        $hasTable = Schema::hasTable('settings');
+    } catch (Exception $e) {
+        return null;
+    }
+
+    if ($hasTable) 
     {
         $setting = cache()->get('setting');
 
