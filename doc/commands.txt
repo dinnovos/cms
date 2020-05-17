@@ -1,0 +1,7 @@
+- Crear Repositorio
+    php artisan make:repository Block
+    php artisan make:repository BlockTranslation
+    php artisan make:repository Language
+    php artisan make:repository "Blog\Post"
+    php artisan make:repository "Blog\Post" --fillable="title,content"
+    php artisan make:entity Cat --fillable="title:string,content:text" --rules="title=>required|min:2, content=>sometimes|min:10"
