@@ -1,6 +1,8 @@
 @extends('layouts.auth')
+
 @section('content')
-  <div class="bg-body-dark bg-pattern" style="background-image: url('assets/media/various/bg-pattern-inverse.png');">
+
+  <div class="bg-body-dark bg-pattern">
       <div class="row mx-0 justify-content-center">
           <div class="hero-static col-lg-6 col-xl-4">
               <div class="content content-full overflow-hidden">
@@ -16,7 +18,7 @@
                   <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
                   <form method="POST" action="{{ route('auth.user.login.verify') }}" aria-label="{{ __('Login') }}">
                       <div class="block block-themed block-rounded block-shadow">
-                          <div class="block-header bg-gd-dusk">
+                          <div class="block-header bg-primary-light">
                               <h3 class="block-title">Iniciar Sesi&oacute;n</h3>
                               <div class="block-options">
                                   <button type="button" class="btn-block-option">
@@ -42,7 +44,7 @@
                                       <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="xxxxx">
                                       @if ($errors->has('password'))
                                       <span class="text-danger" role="alert">
-                                      <strong>{{ $errors->first('password') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                       </span>
                                       @endif
                                   </div>
@@ -63,6 +65,15 @@
                                   </div>
                               </div>
                           </div>
+
+                          <div class="block-content bg-body-light">
+                              <div class="form-group text-center">
+                                  <a class="link-effect text-muted mr-10 mb-5 d-inline-block" href="{{ route("auth.user.register") }}">
+                                      <i class="fa fa-user text-muted mr-5"></i> Registrarme
+                                  </a>
+                              </div>
+                          </div>
+
                       </div>
                   </form>
                   <!-- END Sign In Form -->

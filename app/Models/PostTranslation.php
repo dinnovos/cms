@@ -36,4 +36,13 @@ class PostTranslation extends Model implements Transformable
         'language_id'   => 'required|integer',
         'instance_id'   => 'required|integer',
     ];
+
+    public function getImageAttribute($value){
+
+        if($value){
+            return (is_file(public_path("upload/posts/{$value}"))) ? asset("upload/posts/{$value}") : null;
+        }
+
+        return null;
+    }
 }

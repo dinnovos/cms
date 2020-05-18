@@ -186,7 +186,7 @@ class AssistantsController extends Controller
     {
         $post = request()->all();
 
-        if((int)$item->is_admin === 1){
+        if((int)$user->is_admin === 1){
             $post["type"] = 0;
         }else{
             $post["type"] = 2;

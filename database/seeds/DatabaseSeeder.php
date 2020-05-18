@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('settings')->insert([
-            'project'               => 'Dinnovos',
+            'project'               => 'CMS',
             'route_login_panel'     => 'panel',
             'maintenance_mode'      => 0,
             'coming_soon_mode'      => 0,

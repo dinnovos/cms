@@ -5,7 +5,8 @@
     "keywords": [
         "dinnovos",
         "framework",
-        "laravel"
+        "laravel",
+        "cms"
     ],
     "license": "MIT",
     "require": {

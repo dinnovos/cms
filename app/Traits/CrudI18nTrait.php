@@ -17,28 +17,28 @@ use App\Repositories\LanguageRepository;
 
 trait CrudI18nTrait
 {
-	protected $_appLayout = "backoffice";
-	protected $_appName = "backoffice";
+    protected $_appLayout = "backoffice";
+    protected $_appName = "backoffice";
 
-	protected $_pageTitle = "M&oacute;dulo";
-	protected $_module = "default";
-	protected $_pathModel = "App\Models";
+    protected $_pageTitle = "M&oacute;dulo";
+    protected $_module = "default";
+    protected $_pathModel = "App\Models";
     protected $_pathRepositories = "App\Repositories";
 
     protected $_textCreateBtn = "Nuevo";
 
     protected $_defaultFirstSegment = "default";
-	protected $_defaultSecondSegment = "crudI18n";
+    protected $_defaultSecondSegment = "crudI18n";
 
-	protected $_allowEdit = true;
-	protected $_allowDelete = true;
-	protected $_allowCreate = true;
+    protected $_allowEdit = true;
+    protected $_allowDelete = true;
+    protected $_allowCreate = true;
 
     protected $_allowedTypesRegularExpression = '/(\.jpg|\.jpeg|\.png)$/';
     protected $_allowedTypes = ['jpg', 'jpeg', 'png'];
     protected $_pathUpload = null;
 
-	protected $_model = null;
+    protected $_model = null;
 
     protected $_fields = [
         'title' => 'T&iacute;tulo',
@@ -50,49 +50,50 @@ trait CrudI18nTrait
         1 => 'Activo'
     ];
 
-	private $classModel = null;
-	private $classRepository = null;
+    private $classModel = null;
+    private $classRepository = null;
     private $classTranslationRepositoryRepository = null;
-	private $repository = null;
+    private $repository = null;
     private $views = null;
 
     private $languageRepository = null;
 
-	private $hasFiles = false;
+    private $hasFiles = false;
 
-	public function __construct() {
+    public function __construct() {
 
-		$this->pageTitle 			= (! isset($this->pageTitle))?$this->_pageTitle:$this->pageTitle;
-		$this->module 				= (! isset($this->module))?Str::camel($this->_module):Str::camel($this->module);
-    	
-		$this->allowEdit 			= (! isset($this->allowEdit))?$this->_allowEdit:$this->allowEdit;
-		$this->allowDelete 			= (! isset($this->allowDelete))?$this->_allowDelete:$this->allowDelete;
-		$this->allowCreate 			= (! isset($this->allowCreate))?$this->_allowCreate:$this->allowCreate;
+        $this->pageTitle                    = (! isset($this->pageTitle))?$this->_pageTitle:$this->pageTitle;
+        $this->module                       = (! isset($this->module))?Str::camel($this->_module):Str::camel($this->module);
+        
+        $this->allowEdit                    = (! isset($this->allowEdit))?$this->_allowEdit:$this->allowEdit;
+        $this->allowDelete                  = (! isset($this->allowDelete))?$this->_allowDelete:$this->allowDelete;
+        $this->allowCreate                  = (! isset($this->allowCreate))?$this->_allowCreate:$this->allowCreate;
 
-		$this->pathModel 			= (! isset($this->pathModel))?$this->_pathModel:$this->pathModel;
-		$this->pathRepositories 	= (! isset($this->pathRepositories))?$this->_pathRepositories:$this->pathRepositories;
-		$this->appName 		        = (! isset($this->appName))?$this->_appName:$this->appName;
-        $this->appLayout            = (! isset($this->appLayout))?$this->_appLayout:$this->appLayout;
+        $this->pathModel                    = (! isset($this->pathModel))?$this->_pathModel:$this->pathModel;
+        $this->pathRepositories             = (! isset($this->pathRepositories))?$this->_pathRepositories:$this->pathRepositories;
+        $this->appName                      = (! isset($this->appName))?$this->_appName:$this->appName;
+        $this->appLayout                    = (! isset($this->appLayout))?$this->_appLayout:$this->appLayout;
 
-        $this->fields               = (! isset($this->fields))?$this->_fields:$this->fields;
-        $this->fileFields           = (! isset($this->fileFields))?[]:$this->fileFields;
-        $this->statusOptions        = (! isset($this->statusOptions))?$this->_statusOptions:$this->statusOptions;
+        $this->fields                       = (! isset($this->fields))?$this->_fields:$this->fields;
+        $this->fileFields                   = (! isset($this->fileFields))?[]:$this->fileFields;
+        $this->fileTranslationsFields       = (! isset($this->fileTranslationsFields))?[]:$this->fileTranslationsFields;
+        $this->statusOptions                = (! isset($this->statusOptions))?$this->_statusOptions:$this->statusOptions;
 
-        $this->defaultFirstSegment  = (! isset($this->defaultFirstSegment))?$this->_defaultFirstSegment:$this->defaultFirstSegment;
-        $this->defaultSecondSegment = (! isset($this->defaultSecondSegment))?$this->_defaultSecondSegment:$this->defaultSecondSegment;
+        $this->defaultFirstSegment          = (! isset($this->defaultFirstSegment))?$this->_defaultFirstSegment:$this->defaultFirstSegment;
+        $this->defaultSecondSegment         = (! isset($this->defaultSecondSegment))?$this->_defaultSecondSegment:$this->defaultSecondSegment;
 
-		$this->textCreateBtn        = (! isset($this->textCreateBtn))?$this->_textCreateBtn:$this->textCreateBtn;
+        $this->textCreateBtn                = (! isset($this->textCreateBtn))?$this->_textCreateBtn:$this->textCreateBtn;
 
-        $this->model                = (! isset($this->model))?$this->_model:$this->model;
+        $this->model                        = (! isset($this->model))?$this->_model:$this->model;
 
         $this->allowedTypesRegularExpression    = (! isset($this->allowedTypesRegularExpression))?$this->_allowedTypesRegularExpression:$this->allowedTypesRegularExpression;
         $this->allowedTypes                     = (! isset($this->allowedTypes))?$this->_allowedTypes:$this->allowedTypes;
-		$this->pathUpload 				        = (! isset($this->pathUpload))?$this->module:$this->pathUpload;
+        $this->pathUpload                       = (! isset($this->pathUpload))?$this->module:$this->pathUpload;
 
         // ProductItem => product_item_
         $this->views                = Str::snake($this->module);
 
-        if(is_array($this->fileFields) && count($this->fileFields)){
+        if((is_array($this->fileFields) && count($this->fileFields)) || (is_array($this->fileTranslationsFields) && count($this->fileTranslationsFields))){
             $this->hasFiles = true;
         }
 
@@ -100,31 +101,31 @@ trait CrudI18nTrait
 
         $languages = $this->languageRepository->findWhere(["status" => 1]);
 
-	    view()->share('pageTitle'      , $this->pageTitle);
+        view()->share('pageTitle'      , $this->pageTitle);
 
         view()->share('languages'      , $languages);
 
-	    view()->share('routeIndex'             , "{$this->appName}.{$this->module}.index");
-	    view()->share('routeCreate'            , "{$this->appName}.{$this->module}.create");
-	    view()->share('routeStore'             , "{$this->appName}.{$this->module}.store");
-	    view()->share('routeEdit'              , "{$this->appName}.{$this->module}.edit");
-	    view()->share('routeUpdate'            , "{$this->appName}.{$this->module}.update");
-	    view()->share('routeDestroy'           , "{$this->appName}.{$this->module}.destroy");
-	    view()->share('routeStatus'            , "{$this->appName}.{$this->module}.status");
+        view()->share('routeIndex'             , "{$this->appName}.{$this->module}.index");
+        view()->share('routeCreate'            , "{$this->appName}.{$this->module}.create");
+        view()->share('routeStore'             , "{$this->appName}.{$this->module}.store");
+        view()->share('routeEdit'              , "{$this->appName}.{$this->module}.edit");
+        view()->share('routeUpdate'            , "{$this->appName}.{$this->module}.update");
+        view()->share('routeDestroy'           , "{$this->appName}.{$this->module}.destroy");
+        view()->share('routeStatus'            , "{$this->appName}.{$this->module}.status");
         view()->share('routeInstanceUpdate'    , "{$this->appName}.{$this->module}.update.instance");
 
         view()->share('appName'        , $this->appName);
-	    view()->share('appLayout'      , $this->appLayout);
-	    
-	    view()->share('allowEdit'      , $this->allowEdit);
-	    view()->share('allowDelete'    , $this->allowDelete);
-	    view()->share('allowCreate'    , $this->allowCreate);
+        view()->share('appLayout'      , $this->appLayout);
+        
+        view()->share('allowEdit'      , $this->allowEdit);
+        view()->share('allowDelete'    , $this->allowDelete);
+        view()->share('allowCreate'    , $this->allowCreate);
 
-	    view()->share('module'         , $this->module);
+        view()->share('module'         , $this->module);
         view()->share('views'          , $this->views);
 
         view()->share('fields'         , $this->fields);
-	    view()->share('statusOptions'  , $this->statusOptions);
+        view()->share('statusOptions'  , $this->statusOptions);
 
         // Path for includes into views
         view()->share('firstSegment'   , $this->appName);
@@ -142,16 +143,16 @@ trait CrudI18nTrait
             $this->repository = app($this->classRepository);
             $this->translationRepository = app($this->classTranslationRepository);      
         }
-	}
+    }
 
-	public function index()
-	{		    	
-	    $items = $this->repository->all();
+    public function index()
+    {               
+        $items = $this->repository->all();
 
         return $this->view("index", compact('items'));
-	}
+    }
 
-	public function create()
+    public function create()
     {
         return $this->view("create");
     }
@@ -181,6 +182,10 @@ trait CrudI18nTrait
                 $post["instance_id"]    = $instance->id; 
    
                 $translationInstance = $translationRepository->create($post);
+
+                if($translationInstance && $this->hasFiles){
+                    $this->processFiles($translationInstance);
+                }
             }
         } catch (\Exception $e) {
             return redirect(route("{$this->appName}.{$this->module}.create"))->with('alert_error', 'Ocurrio por favor intente nuevamente');
@@ -223,7 +228,7 @@ trait CrudI18nTrait
 
         if ($validator->fails()) {
             // $validator->errors()->all();
-            return redirect(route("{$this->appName}.{$this->module}.edit", ['id' => $item->id]))->withErrors($validator)->withInput();
+            return redirect(route("{$this->appName}.{$this->module}.edit", ['id' => $item->id, 'lang' => request()->input("lang")]))->withErrors($validator)->withInput();
         }
 
         $version = $item->versions->where("lang", request()->input("lang"))->first();
@@ -236,8 +241,12 @@ trait CrudI18nTrait
                 $version = $translationRepository->create($post);
             }
 
+            if($version && $this->hasFiles){
+                $this->processFiles($version, true);
+            }
+
         } catch (\Exception $e) {
-            return redirect(route("{$this->appName}.{$this->module}.edit", ['id' => $item->id]))->with('alert_error', 'Ocurrio por favor intente nuevamente');
+            return redirect(route("{$this->appName}.{$this->module}.edit", ['id' => $item->id, 'lang' => request()->input("lang")]))->with('alert_error', 'Ocurrio por favor intente nuevamente');
         }
 
         return redirect(route("{$this->appName}.{$this->module}.edit", ['id' => $item->id, 'lang' => request()->input("lang")]))->with('alert_success', 'El registro ha sido actualizado con &eacute;xito');
@@ -312,14 +321,34 @@ trait CrudI18nTrait
         $post["instance_id"] = 1;
         $post["lang"] = "es";
 
-    	return $post;
+        if($this->hasFiles){
+            foreach($this->fileFields as $field){
+                unset($post[$field]);
+            }
+
+            foreach($this->fileTranslationsFields as $field){
+                unset($post[$field]);
+            }
+        }
+
+        return $post;
     }
 
     protected function prepareForUpdateValidation($instanceID)
     {
-    	$post = request()->all();
+        $post = request()->all();
 
         $post["instance_id"] = $instanceID;
+
+        if($this->hasFiles){
+            foreach($this->fileFields as $field){
+                unset($post[$field]);
+            }
+
+            foreach($this->fileTranslationsFields as $field){
+                unset($post[$field]);
+            }
+        }
 
         return $post;
     }
@@ -349,7 +378,7 @@ trait CrudI18nTrait
                 view()->share('secondSegment'  , $this->defaultSecondSegment);
             }
         }
-
+        
         return view()->first([
             "{$this->appName}.{$this->views}.{$template}",
             "{$this->defaultFirstSegment}.{$this->defaultSecondSegment}.{$template}"
@@ -359,7 +388,9 @@ trait CrudI18nTrait
     protected function processFiles($instance, $deleteOldFiles = false)
     {
         $files = request()->allFiles();
+
         $data = [];
+        $dataTranslation = [];
 
         if(count($files) === 0){
             return;
@@ -376,15 +407,37 @@ trait CrudI18nTrait
             }
         }
 
+        foreach($this->fileTranslationsFields as $field)
+        {
+            if(array_key_exists($field, $files)){
+                $upload = $this->uploadFile($field);
+                
+                if(is_array($upload) && $upload['status'] === true){
+                    $dataTranslation[$field] = $upload['name'];
+                }
+            }
+        }
+
         if(count($data)){
             $this->repository->update($data, $instance->id);
+        }
+
+        if(count($dataTranslation)){
+            $this->translationRepository->update($dataTranslation, $instance->id);
         }
 
         if($deleteOldFiles){
 
             foreach($this->fileFields as $field)
             {
-                if($instance->$field){  
+                if($instance->$field && array_key_exists($field, $data)){  
+                    $this->destroyFile($instance->$field);
+                }
+            }            
+
+            foreach($this->fileTranslationsFields as $field)
+            {
+                if($instance->$field && array_key_exists($field, $dataTranslation)){  
                     $this->destroyFile($instance->$field);
                 }
             }

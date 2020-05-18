@@ -23,8 +23,8 @@
 
     <body>
         
-        <div id="page-container" class="sidebar-o sidebar-inverse enable-page-overlay side-scroll page-header-modern main-content-boxed side-trans-enabled page-header-fixed">
- 
+        <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed side-trans-enabled page-header-fixed">
+
             <nav id="sidebar">
                 <!-- Sidebar Content -->
                 <div class="sidebar-content">
@@ -51,7 +51,7 @@
 
                             <!-- Logo -->
                             <div class="content-header-item">
-                                <a class="link-effect font-w700" href="{{ route("admin.dashboard.index") }}">
+                                <a class="link-effect font-w700" href="{{ route("backoffice.account.dashboard") }}">
                                     <span class="font-size-xl text-dual-primary-dark"> {{ setting('project', config('app.name', 'Laravel')) }} </span>
                                 </a>
                             </div>
@@ -65,21 +65,32 @@
                     <div class="content-side content-side-full content-side-user px-10 align-parent">
                         <!-- Visible only in mini mode -->
                         <div class="sidebar-mini-visible-b align-v animated fadeIn">
-                            <img class="img-avatar img-avatar32" src="{{ asset("global-vendor/theme-panel/media/avatars/avatar15.jpg") }}" alt="">
+
+                            @if(auth()->user()->image)
+                                <img class="img-avatar img-avatar32" src="{{ auth()->user()->image }}" alt="{{ auth()->user()->full_name }}">
+                            @else
+                                <img class="img-avatar img-avatar32" src="{{ asset("global-vendor/theme-panel/media/avatars/avatar15.jpg") }}" alt="{{ auth()->user()->full_name }}">
+                            @endif
+                            
                         </div>
                         <!-- END Visible only in mini mode -->
 
                         <!-- Visible only in normal mode -->
                         <div class="sidebar-mini-hidden-b text-center">
-                            <a class="img-link" href="{{ route('admin.assistants.edit', ['id' => Auth::guard('admin')->user()->id ]) }}">
-                                <img class="img-avatar" src="{{ asset("global-vendor/theme-panel/media/avatars/avatar15.jpg") }}" alt="">
+                            <a class="img-link" href="">
+                                @if(auth()->user()->image)
+                                    <img class="img-avatar" src="{{ auth()->user()->image }}" alt="{{ auth()->user()->full_name }}">
+                                @else
+                                    <img class="img-avatar" src="{{ asset("global-vendor/theme-panel/media/avatars/avatar15.jpg") }}" alt="{{ auth()->user()->full_name }}">
+                                @endif
+
                             </a>
                             <ul class="list-inline mt-10">
                                 <li class="list-inline-item">
-                                    <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="{{ route('admin.assistants.edit', ['id' => Auth::guard('admin')->user()->id ]) }}">{{ auth("admin")->user()->full_name }}</a>
+                                    <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="{{ route("backoffice.account.myAccount") }}">{{ auth()->user()->full_name }}</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="link-effect text-dual-primary-dark" href="{{ route('auth.admin.logout') }}">
+                                    <a class="link-effect text-dual-primary-dark" href="{{ route('auth.user.logout') }}">
                                         <i class="si si-logout"></i>
                                     </a>
                                 </li>
@@ -93,110 +104,10 @@
                     <div class="content-side content-side-full">
                         <ul class="nav-main">
                             <li>
-                                <a class="{{ (request()->segment(2) == '') ? "active" : "" }}" href="{{ route('admin.dashboard.index') }}">
+                                <a class="{{ (request()->segment(2) == '') ? "active" : "" }}" href="{{ route('backoffice.account.dashboard') }}">
                                     <i class="fa fa-dashboard"></i> <span class="sidebar-mini-hide">Escritorio</span>
                                 </a>
                             </li>
-
-                            @if(isAdminOrHasPermissionOf('pages-module'))
-                            <li class="{{ (request()->segment(2) == 'pages') ? "open" : "" }}">
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                                    <i class="fa fa-file-text-o"></i><span class="sidebar-mini-hide">P&aacute;ginas</span>
-                                </a>
-                                <ul>
-                                    <li><a href="{{ route('admin.pages.index') }}" class="{{ (request()->segment(3) == '') ? "active" : "" }}"> Listado </a></li>
-                                    @if(isAdminOrHasPermissionOf('create-action'))
-                                        <li><a href="{{ route('admin.pages.create') }}" class="{{ (request()->segment(3) == 'create') ? "active" : "" }}"> Nuevo </a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @endif
-
-                            @if(isAdminOrHasPermissionOf('pages-module'))
-                            <li class="{{ (request()->segment(2) == 'posts') ? "open" : "" }}">
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                                    <i class="fa fa-paper-plane"></i><span class="sidebar-mini-hide">Blog</span>
-                                </a>
-                                <ul>
-                                    <li><a href="{{ route('admin.posts.index') }}" class="{{ (request()->segment(3) == '') ? "active" : "" }}"> Listado </a></li>
-                                    @if(isAdminOrHasPermissionOf('create-action'))
-                                        <li><a href="{{ route('admin.posts.create') }}" class="{{ (request()->segment(3) == 'create') ? "active" : "" }}"> Nuevo </a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @endif
-
-                            @if(isAdminOrHasPermissionOf('blocks-module'))
-                            <li class="{{ (request()->segment(2) == 'blocks') ? "open" : "" }}">
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                                    <i class="fa fa-th-large"></i><span class="sidebar-mini-hide">Bloques</span>
-                                </a>
-                                <ul>
-                                    <li><a href="{{ route('admin.blocks.index') }}" class="{{ (request()->segment(3) == '') ? "active" : "" }}"> Listado </a></li>
-                                    @if(isAdminOrHasPermissionOf('create-action'))
-                                        <li><a href="{{ route('admin.blocks.create') }}" class="{{ (request()->segment(3) == 'create') ? "active" : "" }}"> Nuevo </a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @endif
-
-                            @if(isAdminOrHasPermissionOf('users-module'))
-                            <li class="{{ (request()->segment(2) == 'users') ? "open" : "" }}">
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                                    <i class="fa fa-user"></i><span class="sidebar-mini-hide">Clientes</span>
-                                </a>
-                                <ul>
-                                    <li><a href="{{ route('admin.users.index') }}" class="{{ (request()->segment(3) == '') ? "active" : "" }}"> Listado </a></li>
-                                    @if(isAdminOrHasPermissionOf('create-action'))
-                                        <li><a href="{{ route('admin.users.create') }}" class="{{ (request()->segment(3) == 'create') ? "active" : "" }}"> Nuevo </a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @endif
-
-                            @if(isAdminOrHasPermissionOf('assistants-module'))
-                            <li class="{{ (request()->segment(2) == 'assistants') ? "open" : "" }}">
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                                    <i class="fa fa-user-circle"></i><span class="sidebar-mini-hide">Asistentes</span>
-                                </a>
-                                <ul>
-                                    <li><a href="{{ route('admin.assistants.index') }}" class="{{ (request()->segment(3) == '') ? "active" : "" }}"> Listado </a></li>
-                                    @if(isAdminOrHasPermissionOf('create-action'))
-                                        <li><a href="{{ route('admin.assistants.create') }}" class="{{ (request()->segment(3) == 'create') ? "active" : "" }}"> Nuevo </a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @endif
-
-                            <li class="nav-main-heading"><span class="sidebar-mini-visible">GR</span><span class="sidebar-mini-hidden">General</span></li>
-
-                            @if(isAdminOrHasPermissionOf('security-module'))
-                            <li class="@if(in_array(request()->segment(2), ['roles', 'permissions'])) open @endif">
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                                    <i class="fa fa-unlock-alt"></i><span class="sidebar-mini-hide">Roles y Permisos</span>
-                                </a>
-                                <ul>
-                                    <li><a href="{{ route('admin.roles.index') }}" class="{{ (request()->segment(2) == 'roles') ? "active" : "" }}"> Roles </a></li>
-                                    <li><a href="{{ route('admin.permissions.index') }}" class="{{ (request()->segment(2) == 'permissions') ? "active" : "" }}"> Permisos </a></li>
-                                </ul>
-                            </li>
-                            @endif
-
-                            @if(isAdminOrHasPermissionOf('languages-module'))
-                            <li class="@if(in_array(request()->segment(2), ['languages'])) open @endif">
-                                <a class="{{ (request()->segment(2) == 'languages') ? "active" : "" }}" href="{{ route('admin.languages.index') }}">
-                                    <i class="fa fa-flag"></i> <span class="sidebar-mini-hide">Idiomas</span>
-                                </a>
-                            </li>
-                            @endif
-
-                            @if(isAdminOrHasPermissionOf('settings-module'))
-                            <li>
-                                <a class="{{ (request()->segment(2) == 'settings') ? "active" : "" }}" href="{{ route('admin.settings.edit') }}">
-                                    <i class="fa fa-cog"></i> <span class="sidebar-mini-hide">Ajustes</span>
-                                </a>
-                            </li>
-                            @endif
                         </ul>
                     </div>
                     <!-- END Side Navigation -->
@@ -228,16 +139,16 @@
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user d-sm-none"></i>
-                                <span class="d-none d-sm-inline-block">{{ auth("admin")->user()->full_name }}</span>
+                                <span class="d-none d-sm-inline-block">{{ auth()->user()->full_name }}</span>
                                 <i class="fa fa-angle-down ml-5"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-user-dropdown">
                                 <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">User</h5>
-                                <a class="dropdown-item" href="{{ route('admin.assistants.edit', ['id' => Auth::guard('admin')->user()->id ]) }}">
+                                <a class="dropdown-item" href="{{ route("backoffice.account.myAccount") }}">
                                     <i class="si si-user mr-5"></i> Perfil
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('auth.admin.logout') }}">
+                                <a class="dropdown-item" href="{{ route('auth.user.logout') }}">
                                     <i class="si si-logout mr-5"></i> Salir
                                 </a>
                             </div>

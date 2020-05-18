@@ -34,4 +34,10 @@ class PostsController extends Controller
         ],
         'status' => 'Estado',
     ];
+
+    protected $fileTranslationsFields = [
+        'image'
+    ];
+
+    protected $pathUpload = "posts";
 }
