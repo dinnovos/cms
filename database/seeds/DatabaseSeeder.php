@@ -106,14 +106,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('permissions')->insert([
-            'title'         => 'M&oacute;dulo - P&aacute;ginas',
-            'name'          => 'pages-module',
-            'guard_name'    => 'web',
-            'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at'    => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
-
-        DB::table('permissions')->insert([
             'title'         => 'M&oacute;dulo - Blog',
             'name'          => 'blog-module',
             'guard_name'    => 'web',
@@ -184,12 +176,12 @@ class DatabaseSeeder extends Seeder
         DB::table('role_has_permissions')->insert([
             'role_id'       => 1,
             'permission_id' => 5
-        ]);
+        ]);        
 
         DB::table('role_has_permissions')->insert([
             'role_id'       => 1,
             'permission_id' => 6
-        ]);        
+        ]);
 
         DB::table('role_has_permissions')->insert([
             'role_id'       => 1,
@@ -204,16 +196,6 @@ class DatabaseSeeder extends Seeder
         DB::table('role_has_permissions')->insert([
             'role_id'       => 1,
             'permission_id' => 9
-        ]);
-
-        DB::table('role_has_permissions')->insert([
-            'role_id'       => 1,
-            'permission_id' => 10
-        ]);
-
-        DB::table('role_has_permissions')->insert([
-            'role_id'       => 2,
-            'permission_id' => 10
         ]);
 
         //-----------------------------------------------------------------------------

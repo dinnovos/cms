@@ -99,20 +99,6 @@
                             </li>
 
                             @if(isAdminOrHasPermissionOf('pages-module'))
-                            <li class="{{ (request()->segment(2) == 'pages') ? "open" : "" }}">
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                                    <i class="fa fa-file-text-o"></i><span class="sidebar-mini-hide">P&aacute;ginas</span>
-                                </a>
-                                <ul>
-                                    <li><a href="{{ route('admin.pages.index') }}" class="{{ (request()->segment(3) == '') ? "active" : "" }}"> Listado </a></li>
-                                    @if(isAdminOrHasPermissionOf('create-action'))
-                                        <li><a href="{{ route('admin.pages.create') }}" class="{{ (request()->segment(3) == 'create') ? "active" : "" }}"> Nuevo </a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @endif
-
-                            @if(isAdminOrHasPermissionOf('pages-module'))
                             <li class="{{ (request()->segment(2) == 'posts') ? "open" : "" }}">
                                 <a class="nav-submenu" data-toggle="nav-submenu" href="#">
                                     <i class="fa fa-paper-plane"></i><span class="sidebar-mini-hide">Blog</span>

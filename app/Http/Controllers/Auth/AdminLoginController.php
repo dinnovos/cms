@@ -17,6 +17,10 @@ class AdminLoginController extends Controller
 
     public function show()
     {
+        if(auth("admin")->check()){
+            return response()->redirectTo(route("admin.dashboard.index"));
+        }
+
         return view('auth.login_admin');
     }
 

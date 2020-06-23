@@ -160,6 +160,7 @@ class RegisterController extends Controller
             'email'             => $data['email'],
             'password'          => Hash::make($data['password']),
             'status'            => 2,
+            'type'              => 1,
             'email_token'           => sha1(datetimeToken()),
             'email_token_created'   => datetimeFormat(null),
         ]);

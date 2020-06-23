@@ -41,7 +41,7 @@
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <label for="signup-email">E-mail</label>
-                                        <input type="email" class="form-control" id="signup-email" name="signup-email" placeholder="Ej: john@example.com">
+                                        <input type="email" class="form-control" id="signup-email" name="email" placeholder="Ej: john@example.com">
                                         @if ($errors->has('email'))
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $errors->first('email') }}</strong>
@@ -52,7 +52,7 @@
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <label for="signup-password">Contrase&ntilde;a</label>
-                                        <input type="password" class="form-control" id="signup-password" name="signup-password" placeholder="********">
+                                        <input type="password" class="form-control" id="signup-password" name="password" placeholder="********">
                                         @if ($errors->has('password'))
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $errors->first('password') }}</strong>
@@ -63,7 +63,7 @@
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <label for="signup-password-confirm">Confirmaci&oacute;n de contrase&ntilde;a</label>
-                                        <input type="password" class="form-control" id="signup-password-confirm" name="signup-password-confirm" placeholder="********">
+                                        <input type="password" class="form-control" id="signup-password-confirm" name="password_confirmation" placeholder="********">
                                         @if ($errors->has('password_confirmation'))
                                             <span class="text-danger" role="alert">
                                                 <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -75,7 +75,7 @@
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="signup-terms" name="signup-terms">
+                                            <input type="checkbox" class="custom-control-input" value="1" id="signup-terms" name="terms">
                                             <label class="custom-control-label" for="signup-terms">T&eacute;rminos y condiciones</label>
 
                                             @if ($errors->has('terms'))
